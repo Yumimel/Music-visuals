@@ -7,15 +7,25 @@ import ddf.minim.ugens.*;
 
 Minim minim;
 AudioPlayer song;
+FFT fft;
+AudioInput ap;
 
 void setup() {
   size(800, 800);
   colorMode(RGB);
+  
   minim = new Minim(this);
+  
   song = minim.loadFile("song.mp3");
-  song.play();
+  song.loop();
+  
+    fft = new FFT(ap.bufferSize(), ap.sampleRate());
 }
 void draw() {
+  
+  background(0);
+ 
+    
 
  
   }
