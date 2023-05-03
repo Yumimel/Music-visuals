@@ -101,8 +101,8 @@ float specSLow = 0.03;
   float oldBandValue = fft.getBand(0);
   float dist = -25;
   //double height
-  float doubleH = 2;
-  float colorGap = 50 / (float) ab.size()*2.05;
+  float doubleH = 6;
+  float colorGap = 50 / (float) ab.size()*9.05;
   
   //lines
   for(int i = 1; i < fft.specSize(); i++)
@@ -112,7 +112,7 @@ float specSLow = 0.03;
     
     //color
     stroke((i*colorGap)+180, 205,255);
-    strokeWeight(1 + (globalValue/180));
+    strokeWeight(8 + (globalValue/180));
     
     //bottom left line
     line(0, height-(oldBandValue*doubleH), dist*(i-1), 0, height-(bandValue*doubleH), dist*i);
@@ -130,9 +130,13 @@ float specSLow = 0.03;
     line(width, (oldBandValue*doubleH), dist*(i-1), width, (bandValue*doubleH), dist*i);
     line(width-(oldBandValue*doubleH), 0, dist*(i-1), width-(bandValue*doubleH), 0, dist*i); 
     
-    fill(15+lowValueX, 150+midValueX, 100+highValueX, 255-i);
+    fill(10+lowValueX, 100+midValueX, 10+highValueX, 255-i);
     noStroke();
-    circle(width/2,height/2,(oldBandValue*doubleH));
+    rect(width/2,height/2,(oldBandValue*doubleH),(oldBandValue));
+    
+     //rect((oldBandValue*doubleH),(oldBandValue),width/2,height/2);
+    
+    //rect((oldBandValue),(oldBandValue),width/2,height/2);
   
     oldBandValue = bandValue;
   }
@@ -149,7 +153,7 @@ float specSLow = 0.03;
    fill(0);
    float average = sum / (float) ab.size();
    lerpedAverage = lerp(lerpedAverage, average, 0.1f);
-   circle(width/2, height/2, lerpedAverage * 1000);
+   rect(width/2, height/2, lerpedAverage * 1000,lerpedAverage * 1000);
     
     
   }
