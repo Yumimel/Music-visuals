@@ -28,21 +28,21 @@ void setup() {
   ab = song.mix;
 }
 void draw() {
-  float specSLow = 0.03;
-  float specSMid = 0.125;
-  float specSHigh = 0.20;
+  float specslow = 0.01;
+  float specmid = 0.125;
+  float spechigh = 0.20;
 
   // new values
-  float lowValueX = 0;
-  float midValueX = 0;
-  float highValueX = 0;
+  float lowValueX = 0.1;
+  float midValueX = 0.1;
+  float highValueX = 0.1;
 
   //the old values
   float lowValueY = lowValueX;
   float midValueY = midValueX;
   float highValueY = highValueX;
 
-  float valueDecline = 25;
+  float valueDecline = 20;
 
 
   float lerpedAverage = 0;
@@ -63,23 +63,23 @@ void draw() {
 
 
   //Calculate the new values
-  for (int i = 0; i < fft.specSize()*specSLow; i++)
+  for (int i = 0; i < fft.specSize()*specslow; i++)
   {
     lowValueX += fft.getBand(i);
   }
 
-  for (int i = (int)(fft.specSize()*specSLow); i < fft.specSize()*specSMid; i++)
+  for (int i = (int)(fft.specSize()*specslow); i < fft.specSize()*specmid; i++)
   {
     midValueX += fft.getBand(i);
   }
 
-  for (int i = (int)(fft.specSize()*specSMid); i < fft.specSize()*specSHigh; i++)
+  for (int i = (int)(fft.specSize()*specmid); i < fft.specSize()*spechigh; i++)
   {
     highValueX += fft.getBand(i);
   }
 
 
-  //Slow down the descent
+  
   if (lowValueY > lowValueX) {
     lowValueX = lowValueY - valueDecline;
   }
@@ -96,15 +96,15 @@ void draw() {
   background(lowValueX/100, midValueX/100, highValueX/100);
 
 
-  //This makes the animation go faster for higher pitched sounds
+  
   float globalValue = 0.33 * lowValueX + 0.8 * midValueX + 1 * highValueX;
   float oldBandValue = fft.getBand(0);
-  float dist = -25;
+  float wee = -20;
   //double height
   float doubleH = 6;
   float colorGap = 50 / (float) ab.size()*9.05;
 
-  //lines
+  
   for (int i = 1; i < fft.specSize(); i++)
   {
 
@@ -115,20 +115,16 @@ void draw() {
     strokeWeight(8 + (globalValue/180));
 
     //bottom left line
-    line(0, height-(oldBandValue*doubleH), dist*(i-1), 0, height-(bandValue*doubleH), dist*i);
-    line((oldBandValue*doubleH), height, dist*(i-1), (bandValue*doubleH), height, dist*i);
+    line(0, height-(oldBandValue*doubleH), wee*(i-1), 0, height-(bandValue*doubleH), wee*i);
+    line((oldBandValue*doubleH), height, wee*(i-1), (bandValue*doubleH), height, wee*i);
 
     //bottom right
-    line(width, height-(oldBandValue*doubleH), dist*(i-1), width, height-(bandValue*doubleH), dist*i);
-    line(width-(oldBandValue*doubleH), height, dist*(i-1), width-(bandValue*doubleH), height, dist*i);
-
-    //top left
-    line(0, (oldBandValue*doubleH), dist*(i-1), 0, (bandValue*doubleH), dist*i);
-    line((oldBandValue*doubleH), 0, dist*(i-1), (bandValue*doubleH), 0, dist*i);
+    line(width, height-(oldBandValue*doubleH), wee*(i-1), width, height-(bandValue*doubleH), wee*i);
+    line(width-(oldBandValue*doubleH), height, wee*(i-1), width-(bandValue*doubleH), height, wee*i);
 
     //top right
-    line(width, (oldBandValue*doubleH), dist*(i-1), width, (bandValue*doubleH), dist*i);
-    line(width-(oldBandValue*doubleH), 0, dist*(i-1), width-(bandValue*doubleH), 0, dist*i);
+    line(width, (oldBandValue*doubleH), wee*(i-1), width, (bandValue*doubleH), wee*i);
+    line(width-(oldBandValue*doubleH), 0, wee*(i-1), width-(bandValue*doubleH), 0, wee*i);
 
     fill(10+lowValueX, 100+midValueX, 10+highValueX, 255-i);
     noStroke();
