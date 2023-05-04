@@ -7,7 +7,7 @@ import ddf.minim.ugens.*;
 
 Minim minim;
 
-AudioBuffer ab;
+AudioBuffer pew;
 AudioPlayer song;
 FFT fft;
 AudioInput input;
@@ -25,7 +25,7 @@ void setup() {
 
   input = minim.getLineIn();
   fft = new FFT(song.bufferSize(), song.sampleRate());
-  ab = song.mix;
+  pew = song.mix;
 }
 void draw() {
   float specslow = 0.01;
@@ -45,7 +45,7 @@ void draw() {
   float valueDecline = 20;
 
 
-  float lerpedAverage = 0;
+  float lerpedAverage = -0.02;
   float[] lerpedBuffer = new float[1024];
 
 
@@ -101,8 +101,8 @@ void draw() {
   float oldBandValue = fft.getBand(0);
   float wee = -20;
   //double height
-  float doubleH = 6;
-  float colorGap = 50 / (float) ab.size()*9.05;
+  float doubleH = 3;
+  float colorGap = 50 / (float) pew.size()*9.05;
 
   
   for (int i = 1; i < fft.specSize(); i++)
@@ -137,17 +137,17 @@ void draw() {
     oldBandValue = bandValue;
   }
 
-  //circle
+  //square in the middle
   float sum = 0;
-  for (int i = 0; i<ab.size(); i++)
+  for (int i = 0; i<pew.size(); i++)
   {
-    sum += abs(ab.get(i));
-    lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);
+    sum += abs(pew.get(i));
+    lerpedBuffer[i] = lerp(lerpedBuffer[i], pew.get(i), 0.1f);
   }
 
   stroke((colorGap)+220, (colorGap)*lowValueX, 255);
   fill(0);
-  float average = sum / (float) ab.size();
+  float average = sum / (float) pew.size();
   lerpedAverage = lerp(lerpedAverage, average, 0.1f);
   rect(width/2, height/2, lerpedAverage * 1000, lerpedAverage * 1000);
 }
