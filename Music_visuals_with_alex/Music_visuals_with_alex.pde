@@ -14,7 +14,7 @@ AudioInput input;
 int[][] colo=new int[300][3];
 
 void setup() {
-  // size(800, 800);
+
   size(500, 500, P3D);
   colorMode(RGB);
 
@@ -79,7 +79,7 @@ void draw() {
   }
 
 
-  
+
   if (lowValueY > lowValueX) {
     lowValueX = lowValueY - valueDecline;
   }
@@ -96,7 +96,7 @@ void draw() {
   background(lowValueX/100, midValueX/100, highValueX/100);
 
 
-  
+
   float globalValue = 0.33 * lowValueX + 0.8 * midValueX + 1 * highValueX;
   float oldBandValue = fft.getBand(0);
   float wee = -20;
@@ -104,7 +104,7 @@ void draw() {
   float doubleH = 3;
   float colorGap = 50 / (float) pew.size()*9.05;
 
-  
+
   for (int i = 1; i < fft.specSize(); i++)
   {
 
@@ -129,10 +129,10 @@ void draw() {
     fill(10+lowValueX, 100+midValueX, 10+highValueX, 255-i);
     noStroke();
     rect(width/2, height/2, (oldBandValue*doubleH), (oldBandValue));
-   
-    rect((oldBandValue*doubleH),(oldBandValue*doubleH),width/2,height/2);
 
-    rect((oldBandValue),(oldBandValue),width/2,height/2);
+    rect((oldBandValue*doubleH), (oldBandValue*doubleH), width/2, height/2);
+
+    rect((oldBandValue), (oldBandValue), width/2, height/2);
 
     oldBandValue = bandValue;
   }
